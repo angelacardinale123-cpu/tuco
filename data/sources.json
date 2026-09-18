@@ -1,6 +1,6 @@
 {
   "_comment": "Published CSV links for the Google Sheets that drive this site. Leave a value empty and that part of the page is left exactly as it is, so a missing or broken link can never blank the site.",
   "meetingsCsvUrl": "https://docs.google.com/spreadsheets/d/1dk3-fAVLCLglvWmyHCug7D1-NOgPdQWnsazNeTQwFuo/export?format=csv",
-  "resourcesCsvUrl": "",
+  "resourcesCsvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMTTZtTa92JGERhtRVZ4htBPMPkf3TJiwldb6VgrN0uQbYOSUiekQB0Bwz7jOxDhC_wt6UbOZ1kwep/pub?gid=180034342&single=true&output=csv",
   "submitFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdyHpuc_HYuGQoCNZP5sS13xgql_X_Y5nGPRjUqEOlkUWiIRQ/viewform"
 }
