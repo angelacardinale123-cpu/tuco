@@ -57,7 +57,19 @@ function toObjects(rows) {
     .filter((r) => r.some((c) => String(c).trim() !== ""))
     .map((r) => Object.fromEntries(head.map((h, i) => [h, (r[i] ?? "").trim()])));
 }
-const pick = (o, ...keys) => { for (const k of keys) if (o[k]) return o[k]; return ""; };
+// Headers are matched first exactly, then by "contains", so a Google Form question worded
+// "Link to Resource" or "Short description of resource" still lands in the right place.
+// Returns [value, headerKey] so two fields can never claim the same column.
+function pickKey(o, keys, taken = []) {
+  for (const k of keys) if (o[k] && !taken.includes(k)) return [o[k], k];
+  for (const k of keys) {
+    for (const h of Object.keys(o)) {
+      if (h.includes(k) && o[h] && !taken.includes(h)) return [o[h], h];
+    }
+  }
+  return ["", ""];
+}
+const pick = (o, ...keys) => pickKey(o, keys)[0];
 const isYes = (v) => ["yes", "y", "true", "x", "1", "approved", "checked"].includes(String(v).trim().toLowerCase());
 
 async function fetchCsv(url) {
@@ -114,18 +126,31 @@ function renderMeetings(rows) {
   }).join("\n");
 }
 
+// The accessibility question offers Yes, No, and Unsure. Say which it is rather than only
+// flagging the good case, because "not checked" is the thing a reader most needs to know.
+function a11yLabel(v) {
+  const s = String(v ?? "").trim().toLowerCase();
+  if (!s) return "";
+  if (s === "yes" || s.startsWith("yes")) return "Checked for accessibility";
+  if (s.startsWith("no")) return "Not checked for accessibility";
+  return "Accessibility not confirmed";
+}
+
 function renderResources(rows) {
   const items = rows
-    .map((r) => ({
-      title: pick(r, "resourcetitle", "title", "nameoftheresource", "name"),
-      url: safeUrl(pick(r, "link", "url", "resourcelink", "linktotheresource")),
-      desc: pick(r, "description", "shortdescription", "whatisit"),
-      category: pick(r, "category", "type", "topic"),
-      who: pick(r, "yourname", "name", "submittedby", "submitter"),
-      college: pick(r, "college", "yourcollege", "institution"),
-      a11y: pick(r, "accessibility", "accessibilitychecked", "hasthisbeencheckedforaccessibility", "accessible"),
-      approved: pick(r, "approved", "approve", "publish", "published"),
-    }))
+    .map((r) => {
+      const [title] = pickKey(r, ["resourcetitle", "title", "nameoftheresource"]);
+      const [url] = pickKey(r, ["linktoresource", "resourcelink", "linkto", "link", "url"]);
+      const [desc] = pickKey(r, ["shortdescription", "description", "whatisit"]);
+      const [category] = pickKey(r, ["category", "type", "topic"]);
+      const [who, whoKey] = pickKey(r, ["yournameandcollege", "nameandcollege", "yourname", "submittedby", "submitter", "name"]);
+      const [college] = pickKey(r, ["yourcollege", "college", "institution"], [whoKey]);
+      return {
+        title, url: safeUrl(url), desc, category, who, college,
+        a11y: pick(r, "hasthisbeencheckedforaccessibility", "accessibility", "accessible"),
+        approved: pick(r, "approved", "approve", "publish"),
+      };
+    })
     .filter((x) => isYes(x.approved) && x.title && x.url);
 
   if (!items.length) {
@@ -133,10 +158,11 @@ function renderResources(rows) {
   }
   return items.map((x) => {
     const by = [x.who, x.college].filter(Boolean).map(esc).join(", ");
+    const a11y = a11yLabel(x.a11y);
     const meta = [
       x.category ? `<span class="res-tag">${esc(x.category)}</span>` : "",
       by ? `Shared by ${by}` : "",
-      isYes(x.a11y) ? `<span class="res-a11y">Checked for accessibility</span>` : "",
+      a11y ? `<span class="res-a11y">${esc(a11y)}</span>` : "",
     ].filter(Boolean).join(" · ");
     return `
         <article class="res-item">
