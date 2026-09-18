@@ -1,0 +1,46 @@
+# Rebuilds the meetings list and the shared-resources list from the Google Sheets, and commits
+# the result so GitHub Pages republishes ccctutoring.org.
+#
+# Runs every 15 minutes, and can be run on demand from the Actions tab with "Run workflow".
+# If a sheet is unreachable the job leaves that part of the page untouched and exits cleanly,
+# so a Google outage or a sharing mistake can never blank the website.
+name: Sync site from Google Sheets
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - "build.mjs"
+      - "data/sources.json"
+      - ".github/workflows/sync.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-site
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Rebuild the page from the sheets
+        run: node build.mjs
+      - name: Commit any changes
+        run: |
+          if [ -n "$(git status --porcelain index.html)" ]; then
+            git config user.name "TUCO site bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Update meetings and resources from the sheets"
+            git push
+          else
+            echo "Nothing changed."
+          fi

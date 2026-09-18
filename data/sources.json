@@ -1,0 +1,6 @@
+{
+  "_comment": "Published CSV links for the Google Sheets that drive this site. Leave a value empty and that part of the page is left exactly as it is, so a missing or broken link can never blank the site.",
+  "meetingsCsvUrl": "",
+  "resourcesCsvUrl": "",
+  "submitFormUrl": ""
+}

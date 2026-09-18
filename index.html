@@ -97,6 +97,18 @@ h2{font-family:var(--display);font-size:clamp(24px,4vw,34px);line-height:1.15;
 .doc.none{border-style:dashed;color:var(--muted);font-weight:400;cursor:default}
 .note{font-size:15px;color:var(--muted);margin-top:1rem}
 
+/* ---------- shared resources ---------- */
+.res{display:grid;gap:0;border-top:2px solid var(--rule-strong)}
+.res-item{padding:1.15rem 0;border-bottom:1px solid var(--rule)}
+.res-title{margin:0 0 .3rem;font-size:18px;line-height:1.3;font-weight:700}
+.res-title a{color:var(--beak)}
+.res-desc{margin:0 0 .35rem;max-width:68ch}
+.res-meta{margin:0;font-size:14.5px;color:var(--muted)}
+.res-tag{display:inline-block;font-size:13.5px;font-weight:600;color:var(--pink);
+         background:var(--pink-wash);border-radius:999px;padding:.15rem .6rem;margin-right:.5rem}
+.res-a11y{font-weight:600}
+.res-empty{color:var(--muted);padding:1.15rem 0;border-bottom:1px solid var(--rule);margin:0}
+
 /* ---------- commitment ---------- */
 .commit{background:var(--pink-wash);border-radius:14px;padding:1.5rem 1.6rem;margin-top:.4rem}
 .commit p{margin:0 0 1rem;font-size:clamp(17px,2.2vw,19px);line-height:1.55}
@@ -145,6 +157,7 @@ footer a{color:var(--beak)}
       <p class="lede">Agendas and notes for every meeting, in one place. All meetings run 10:00 to 11:00 am.</p>
 
       <div class="meets">
+        <!-- MEETINGS:START -->
         <div class="meet">
           <p class="meet-date">February 20, 2026<span class="meet-time">10:00 to 11:00 am</span></p>
           <p class="docs">
@@ -184,8 +197,22 @@ footer a{color:var(--beak)}
             <span class="doc none">Notes not posted<span class="sr"> for the September 18, 2026 meeting</span></span>
           </p>
         </div>
+        <!-- MEETINGS:END -->
       </div>
       <p class="note">Every document opens in Google Docs.</p>
+    </section>
+
+    <section aria-labelledby="resources">
+      <h2 id="resources">Shared resources</h2>
+      <p class="lede">Materials shared by tutoring coordinators across California's community colleges. Everything here was submitted by a colleague.</p>
+      <div class="res">
+        <!-- RESOURCES:START -->
+        <p class="res-empty">No resources have been posted yet.</p>
+        <!-- RESOURCES:END -->
+      </div>
+      <!-- SUBMIT:START -->
+      <p class="note">Submissions open soon.</p>
+        <!-- SUBMIT:END -->
     </section>
 
     <section aria-labelledby="about">
