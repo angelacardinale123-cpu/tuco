@@ -21,6 +21,9 @@
   --display:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
   --body:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --bloom-1:rgba(242,160,192,.148); --bloom-2:rgba(168,180,240,.140);
+  --bloom-3:rgba(159,220,196,.148); --bloom-4:rgba(255,224,138,.140);
+  --bloom-5:rgba(255,179,138,.096);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -29,6 +32,9 @@
     --beak:#ffb14d; --beak-ink:#16130f; --beak-wash:#2a1f12;
     --pink:#ff7ab3; --pink-wash:#2c1520;
     --shadow:0 1px 2px rgba(0,0,0,.5), 0 12px 34px rgba(0,0,0,.35);
+    --bloom-1:rgba(242,160,192,.063); --bloom-2:rgba(168,180,240,.063);
+    --bloom-3:rgba(159,220,196,.063); --bloom-4:rgba(255,224,138,.057);
+    --bloom-5:rgba(255,179,138,.044);
   }
 }
 :root[data-theme="dark"]{
@@ -37,11 +43,26 @@
   --beak:#ffb14d; --beak-ink:#16130f; --beak-wash:#2a1f12;
   --pink:#ff7ab3; --pink-wash:#2c1520;
   --shadow:0 1px 2px rgba(0,0,0,.5), 0 12px 34px rgba(0,0,0,.35);
+  --bloom-1:rgba(242,160,192,.063); --bloom-2:rgba(168,180,240,.063);
+  --bloom-3:rgba(159,220,196,.063); --bloom-4:rgba(255,224,138,.057);
+  --bloom-5:rgba(255,179,138,.044);
 }
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
      font-size:17px;line-height:1.6;-webkit-text-size-adjust:100%}
+
+/* ---------- pastel tie-dye wash ----------
+   A fixed layer behind all content. Pure CSS, no images, no motion.
+   Stronger or softer: change the alpha on --bloom-1..5 above. */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(42rem 34rem at 14% 6%,  var(--bloom-1) 0%, transparent 62%),
+    radial-gradient(38rem 32rem at 86% 12%, var(--bloom-2) 0%, transparent 60%),
+    radial-gradient(40rem 34rem at 78% 74%, var(--bloom-3) 0%, transparent 62%),
+    radial-gradient(36rem 30rem at 10% 82%, var(--bloom-4) 0%, transparent 60%),
+    radial-gradient(30rem 26rem at 50% 44%, var(--bloom-5) 0%, transparent 66%)}
 :focus-visible{outline:3px solid var(--beak);outline-offset:3px;border-radius:4px}
 .skip{position:absolute;left:-9999px;top:0;background:var(--beak);color:var(--beak-ink);
       padding:.7rem 1.1rem;border-radius:0 0 10px 0;z-index:50;font-weight:700}
@@ -121,6 +142,7 @@ footer a{color:var(--beak)}
 
 @media print{
   body{background:#fff;font-size:11pt}
+  body::before{display:none}
   .skip,.cta{display:none}
   .join,.commit{border:1px solid #000;background:#fff}
   a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}
@@ -214,6 +236,17 @@ footer a{color:var(--beak)}
       <!-- SUBMIT:START -->
       <p class="docrow"><a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdyHpuc_HYuGQoCNZP5sS13xgql_X_Y5nGPRjUqEOlkUWiIRQ/viewform">Share a resource with the group</a></p>
         <!-- SUBMIT:END -->
+    </section>
+
+    <section aria-labelledby="agenda">
+      <h2 id="agenda">Suggest an agenda item or a presentation</h2>
+      <p class="lede">Meetings are built from what the group says it needs. Bring a question you are stuck on, or offer to share something your center is doing.</p>
+      <div class="join">
+        <h2>What to send</h2>
+        <p>A topic you would like discussed, a problem you would like other colleges to weigh in on, or a practice you would be willing to present for ten or fifteen minutes. You do not need slides, and you do not need to have it figured out.</p>
+        <a class="cta" href="mailto:acardinale@barstow.edu?subject=TUCO%3A%20agenda%20item%20or%20presentation&amp;body=Topic%3A%0A%0AWould%20you%20like%20this%20discussed%2C%20or%20would%20you%20like%20to%20present%20it%3F%0A%0AAnything%20else%20we%20should%20know%3A%0A">Send an idea</a>
+        <p class="after">Ideas are welcome any time, not only before a meeting.</p>
+      </div>
     </section>
 
     <section aria-labelledby="about">
