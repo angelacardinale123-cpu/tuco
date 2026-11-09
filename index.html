@@ -89,7 +89,9 @@ h1{margin:0}
 /* ---------- join ---------- */
 .join{background:var(--surface);border:1px solid var(--rule);border-left:6px solid var(--beak);
       border-radius:14px;padding:1.4rem 1.5rem;margin:1.75rem 0 0;box-shadow:var(--shadow)}
-.join h2{margin:0 0 .5rem;font-family:var(--display);font-size:clamp(21px,3vw,26px);letter-spacing:-.01em}
+.join h2,.join h3{margin:0 0 .5rem;font-family:var(--display);font-size:clamp(21px,3vw,26px);letter-spacing:-.01em}
+.join .ask{margin:.25rem 0 1rem;padding-left:1.25rem;max-width:62ch}
+.join .ask li{margin-bottom:.45rem}
 .cta{display:inline-flex;align-items:center;gap:.6rem;background:var(--beak);color:var(--beak-ink);
      text-decoration:none;font-weight:700;font-size:17px;padding:.85rem 1.4rem;border-radius:11px;
      border:2px solid var(--beak);min-height:44px;margin-top:.35rem}
@@ -247,13 +249,16 @@ footer a{color:var(--beak)}
     </section>
 
     <section aria-labelledby="agenda">
-      <h2 id="agenda">Suggest an agenda item or a presentation</h2>
-      <p class="lede">Meetings are built from what the group says it needs. Bring a question you are stuck on, or offer to share something your center is doing.</p>
+      <h2 id="agenda">Request an agenda item or a presentation</h2>
+      <p class="lede">Meetings are built around what members ask for. Use one short form for either kind of request.</p>
       <div class="join">
-        <h2>What to send</h2>
-        <p>A topic you would like discussed, a problem you would like other colleges to weigh in on, or a practice you would be willing to present for ten or fifteen minutes. You do not need slides, and you do not need to have it figured out.</p>
-        <a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfRZNEvmnbk3H5AguylfVuOCjGbbeGhQmnro1mGRyz4_wgIjQ/viewform">Send an idea</a>
-        <p class="after">Ideas are welcome any time, not only before a meeting.</p>
+        <h3>Two ways to shape a meeting</h3>
+        <ul class="ask">
+          <li>Ask for an agenda item: a topic you would like discussed, or a problem you would like other colleges to weigh in on.</li>
+          <li>Offer to present a practice from your center for ten to fifteen minutes. You do not need slides, and you do not need to have it figured out.</li>
+        </ul>
+        <a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfRZNEvmnbk3H5AguylfVuOCjGbbeGhQmnro1mGRyz4_wgIjQ/viewform">Request an agenda item or presentation<span class="sr"> (Google Form)</span></a>
+        <p class="after">The form asks three things: your idea, your name and college, and your email. Requests are welcome any time, not only before a meeting.</p>
       </div>
     </section>
 
